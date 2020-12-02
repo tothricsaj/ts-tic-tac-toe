@@ -2,6 +2,8 @@ const welcomeScreen = document.querySelector('.welcome-screen')
 const firstPlayer = <HTMLInputElement>welcomeScreen?.querySelector('#first-player')
 const secondPlayer = <HTMLInputElement>welcomeScreen?.querySelector('#second-player')
 
+type htmlElementTypes = HTMLElement | HTMLDivElement
+
 interface valueDictionary <TValue>{
     [id: string]: TValue
 }
@@ -26,9 +28,15 @@ function inputValues() {
 
 const valueHolder = inputValues()
 
+const dissolveDisable = (parentElem: htmlElementTypes) => (
+    parentElem.querySelector('.disable-cover')?.setAttribute('style', 'display: none')
+)
+
 const checkInputs = (obj: valueDictionary<any>) => {
     if(!!obj.val1 && !!obj.val2) {
         console.log('%cIt is OK!!!', 'color: green')
+        const player = <HTMLDivElement>document.querySelector('.player')!
+        dissolveDisable(player)
     } else {
         console.log('%cNames are required!!!', 'color: red')
     }
