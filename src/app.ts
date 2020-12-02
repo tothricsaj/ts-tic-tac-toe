@@ -28,17 +28,20 @@ function inputValues() {
 
 const valueHolder = inputValues()
 
-const dissolveDisable = (parentElem: htmlElementTypes) => (
-    parentElem.querySelector('.disable-cover')?.setAttribute('style', 'display: none')
-)
+const toggleDisable = (parentElem: htmlElementTypes, enable: boolean) => {
+    const displayProperty = enable ? 'block' : 'none'
+    parentElem.querySelector('.disable-cover')?.setAttribute('style', `display: ${displayProperty}`)
+}
+
+const player = <HTMLDivElement>document.querySelector('.player')!
 
 const checkInputs = (obj: valueDictionary<any>) => {
     if(!!obj.val1 && !!obj.val2) {
         console.log('%cIt is OK!!!', 'color: green')
-        const player = <HTMLDivElement>document.querySelector('.player')!
-        dissolveDisable(player)
+        toggleDisable(player, false)
     } else {
         console.log('%cNames are required!!!', 'color: red')
+        toggleDisable(player, true)
     }
 }
 
