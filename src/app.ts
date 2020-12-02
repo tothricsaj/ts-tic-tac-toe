@@ -46,12 +46,25 @@ class Welcome {
     }
 
     private checkPlayerSelect(obj: valueDictionary<any>) {
+        // TODO(tothricsaj): refact this!!!!!! Not too dry code
         if(obj.val1 === 'X') {
-            this.secondPlayerSelector[1].disabled = false
-            this.secondPlayerSelector[2].disabled = true
-        } else if(obj.val1 === 'O') {
             this.secondPlayerSelector[1].disabled = true
             this.secondPlayerSelector[2].disabled = false
+            this.firstPlayerSelector.disabled = true
+        } else if(obj.val1 === 'O') {
+            this.secondPlayerSelector[1].disabled = false
+            this.secondPlayerSelector[2].disabled = true
+            this.firstPlayerSelector.disabled = true
+        }
+
+        if(obj.val2 === 'X') {
+            this.firstPlayerSelector[1].disabled = true
+            this.firstPlayerSelector[2].disabled = false
+            this.secondPlayerSelector.disabled = true
+        } else if(obj.val2 === 'O') {
+            this.firstPlayerSelector[1].disabled = false
+            this.firstPlayerSelector[2].disabled = true
+            this.secondPlayerSelector.disabled = true
         }
     }
 
@@ -69,11 +82,6 @@ class Welcome {
         }
     }
 
-
-    // private selcetorHandler(objectIndex: string, inputElemnt: any) {
-        
-    // }
-
     runHandling() {
         this.firstPlayerNameInput.addEventListener('keyup', (e) => {
             this.playerPropertySettingHandler('val1', e.currentTarget, 'name')
@@ -85,6 +93,10 @@ class Welcome {
 
         this.firstPlayerSelector.addEventListener('change', (e) => {
             this.playerPropertySettingHandler('val1', e.currentTarget, 'selector')
+        })
+
+        this.secondPlayerSelector.addEventListener('change', (e) => {
+            this.playerPropertySettingHandler('val2', e.currentTarget, 'selector')
         })
     }
 }

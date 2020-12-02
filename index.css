@@ -11,5 +11,4 @@
     z-index: 100;
     background-color: rgba(100,100,100,0.5);
     cursor: pointer;
-    display: none; /*TODO(tothricsaj): delete this line when you developed selectorHandler()*/
 }
