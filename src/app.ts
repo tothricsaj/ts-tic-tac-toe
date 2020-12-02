@@ -1,5 +1,7 @@
 import {toggleDisable} from './common/common'
 
+type playerPropertyType = 'name' | 'selector'
+
 interface valueDictionary <TValue>{
     [id: string]: TValue
 }
@@ -10,8 +12,12 @@ class Welcome {
     private firstPlayerNameInput = <HTMLInputElement>this.welcomeScreen?.querySelector('#first-player')
     private secondPlayerNameInput = <HTMLInputElement>this.welcomeScreen?.querySelector('#second-player')
     private playerSelectorWrapper = <HTMLDivElement>document.querySelector('.player')!
+    private firstPlayerSelector = <HTMLSelectElement>document.querySelector('#fst-player-selector')!
+    private secondPlayerSelector = <HTMLSelectElement>document.querySelector('#snd-player-selector')!
 
-    private valueHolder = this.inputValues()
+
+    private nameHolder = this.inputValues()
+    private playerHolder = this.inputValues()
 
     private inputValues() {
         let values: valueDictionary<any>
@@ -31,7 +37,7 @@ class Welcome {
         }
     }
 
-    private checkInputs(obj: valueDictionary<any>) {
+    private checkNameInputs(obj: valueDictionary<any>) {
         if(!!obj.val1 && !!obj.val2) {
             toggleDisable(this.playerSelectorWrapper, false)
         } else {
@@ -39,19 +45,46 @@ class Welcome {
         }
     }
 
-    private nameSettingHandler(objectIndex: string, inputElemnt: any) {
-        const castedElement = <HTMLInputElement>inputElemnt
-        const valueObject = this.valueHolder(objectIndex, castedElement.value)
-        this.checkInputs(valueObject)
+    private checkPlayerSelect(obj: valueDictionary<any>) {
+        if(obj.val1 === 'X') {
+            this.secondPlayerSelector[1].disabled = false
+            this.secondPlayerSelector[2].disabled = true
+        } else if(obj.val1 === 'O') {
+            this.secondPlayerSelector[1].disabled = true
+            this.secondPlayerSelector[2].disabled = false
+        }
     }
+
+    private playerPropertySettingHandler(objectIndex: string, inputElemnt: any, playerProperty: playerPropertyType) {
+        const castedElement = <HTMLInputElement>inputElemnt
+        let valueObject
+
+        if(playerProperty === 'name') {
+            valueObject = this.nameHolder(objectIndex, castedElement.value)
+            this.checkNameInputs(valueObject)
+        }
+        else if(playerProperty === 'selector') {
+            valueObject = this.playerHolder(objectIndex, castedElement.value)
+            this.checkPlayerSelect(valueObject)
+        }
+    }
+
+
+    // private selcetorHandler(objectIndex: string, inputElemnt: any) {
+        
+    // }
 
     runHandling() {
         this.firstPlayerNameInput.addEventListener('keyup', (e) => {
-            this.nameSettingHandler('val1', e.currentTarget)
+            this.playerPropertySettingHandler('val1', e.currentTarget, 'name')
         })
 
         this.secondPlayerNameInput.addEventListener('keyup', (e) => {
-            this.nameSettingHandler('val2', e.currentTarget)
+            this.playerPropertySettingHandler('val2', e.currentTarget, 'name')
+        })
+
+        this.firstPlayerSelector.addEventListener('change', (e) => {
+            this.playerPropertySettingHandler('val1', e.currentTarget, 'selector')
         })
     }
 }
