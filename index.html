@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
     <script type="module" src="./dist/app.js" defer></script>
     <title>TS Tic-tac-toe</title>
 </head>
@@ -9,6 +10,24 @@
     <div class="welcome-screen">
         <input id="first-player" type="text" placeholder="First Player">
         <input id="second-player" type="text" placeholder="Second Player">
+    </div>
+
+    <div class="player">
+        <div class="disable-cover"></div>
+        <div class="player__first">
+            <label for="first-player-select">First player</label>
+            <select name="first-player-select" class="player__selecet">
+                <option value="X">X</option>
+                <option value="O">O</option>
+            </select>
+        </div>
+        <div class="player__second">
+            <label for="second-player-select">Second player</label>
+            <select name="second-player-select" class="player__selecet">
+                <option value="X">X</option>
+                <option value="O">O</option>
+            </select>
+        </div>
     </div>
 </body>
 </html>
