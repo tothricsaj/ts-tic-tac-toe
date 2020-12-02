@@ -1,18 +1,19 @@
 import {toggleDisable} from './common/common'
 
-const welcomeScreen = document.querySelector('.welcome-screen')
-const firstPlayerNameInput = <HTMLInputElement>welcomeScreen?.querySelector('#first-player')
-const secondPlayerNameInput = <HTMLInputElement>welcomeScreen?.querySelector('#second-player')
-
-const playerSelectorWrapper = <HTMLDivElement>document.querySelector('.player')!
-
-
 interface valueDictionary <TValue>{
     [id: string]: TValue
 }
 
 class Welcome {
-    inputValues() {
+
+    private welcomeScreen = document.querySelector('.welcome-screen')
+    private firstPlayerNameInput = <HTMLInputElement>this.welcomeScreen?.querySelector('#first-player')
+    private secondPlayerNameInput = <HTMLInputElement>this.welcomeScreen?.querySelector('#second-player')
+    private playerSelectorWrapper = <HTMLDivElement>document.querySelector('.player')!
+
+    private valueHolder = this.inputValues()
+
+    private inputValues() {
         let values: valueDictionary<any>
 
         values = {
@@ -30,28 +31,26 @@ class Welcome {
         }
     }
 
-    valueHolder = this.inputValues()
-
-    checkInputs = (obj: valueDictionary<any>) => {
+    private checkInputs(obj: valueDictionary<any>) {
         if(!!obj.val1 && !!obj.val2) {
-            toggleDisable(playerSelectorWrapper, false)
+            toggleDisable(this.playerSelectorWrapper, false)
         } else {
-            toggleDisable(playerSelectorWrapper, true)
+            toggleDisable(this.playerSelectorWrapper, true)
         }
     }
 
-    nameSettingHandler = (objectIndex: string, inputElemnt: any) => {
+    private nameSettingHandler(objectIndex: string, inputElemnt: any) {
         const castedElement = <HTMLInputElement>inputElemnt
         const valueObject = this.valueHolder(objectIndex, castedElement.value)
         this.checkInputs(valueObject)
     }
 
     runHandling() {
-        firstPlayerNameInput.addEventListener('keyup', (e) => {
+        this.firstPlayerNameInput.addEventListener('keyup', (e) => {
             this.nameSettingHandler('val1', e.currentTarget)
         })
 
-        secondPlayerNameInput.addEventListener('keyup', (e) => {
+        this.secondPlayerNameInput.addEventListener('keyup', (e) => {
             this.nameSettingHandler('val2', e.currentTarget)
         })
     }
