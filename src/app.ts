@@ -1,56 +1,61 @@
-const welcomeScreen = document.querySelector('.welcome-screen')
-const firstPlayer = <HTMLInputElement>welcomeScreen?.querySelector('#first-player')
-const secondPlayer = <HTMLInputElement>welcomeScreen?.querySelector('#second-player')
+import {toggleDisable} from './common/common'
 
-type htmlElementTypes = HTMLElement | HTMLDivElement
+const welcomeScreen = document.querySelector('.welcome-screen')
+const firstPlayerNameInput = <HTMLInputElement>welcomeScreen?.querySelector('#first-player')
+const secondPlayerNameInput = <HTMLInputElement>welcomeScreen?.querySelector('#second-player')
+
+const playerSelectorWrapper = <HTMLDivElement>document.querySelector('.player')!
+
 
 interface valueDictionary <TValue>{
     [id: string]: TValue
 }
 
-function inputValues() {
-    let values: valueDictionary<any>
+class Welcome {
+    inputValues() {
+        let values: valueDictionary<any>
 
-    values = {
-        val1: '',
-        val2: ''
-    }
-
-    return function(index: string, val: any) {
         values = {
-            ...values,
-            [index]: val
+            val1: '',
+            val2: ''
         }
 
-        return values
+        return function(index: string, val: any) {
+            values = {
+                ...values,
+                [index]: val
+            }
+
+            return values
+        }
+    }
+
+    valueHolder = this.inputValues()
+
+    checkInputs = (obj: valueDictionary<any>) => {
+        if(!!obj.val1 && !!obj.val2) {
+            toggleDisable(playerSelectorWrapper, false)
+        } else {
+            toggleDisable(playerSelectorWrapper, true)
+        }
+    }
+
+    nameSettingHandler = (objectIndex: string, inputElemnt: any) => {
+        const castedElement = <HTMLInputElement>inputElemnt
+        const valueObject = this.valueHolder(objectIndex, castedElement.value)
+        this.checkInputs(valueObject)
+    }
+
+    runHandling() {
+        firstPlayerNameInput.addEventListener('keyup', (e) => {
+            this.nameSettingHandler('val1', e.currentTarget)
+        })
+
+        secondPlayerNameInput.addEventListener('keyup', (e) => {
+            this.nameSettingHandler('val2', e.currentTarget)
+        })
     }
 }
 
-const valueHolder = inputValues()
-
-const toggleDisable = (parentElem: htmlElementTypes, enable: boolean) => {
-    const displayProperty = enable ? 'block' : 'none'
-    parentElem.querySelector('.disable-cover')?.setAttribute('style', `display: ${displayProperty}`)
-}
-
-const player = <HTMLDivElement>document.querySelector('.player')!
-
-const checkInputs = (obj: valueDictionary<any>) => {
-    if(!!obj.val1 && !!obj.val2) {
-        console.log('%cIt is OK!!!', 'color: green')
-        toggleDisable(player, false)
-    } else {
-        console.log('%cNames are required!!!', 'color: red')
-        toggleDisable(player, true)
-    }
-}
-
-firstPlayer.addEventListener('keyup', function() {
-    const valueObject = valueHolder('val1', this.value)
-    checkInputs(valueObject)
-})
-
-secondPlayer.addEventListener('keyup', function() {
-    const valueObject = valueHolder('val2', this.value)
-    checkInputs(valueObject)
-})
+const welcome = new Welcome
+welcome.runHandling()
