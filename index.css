@@ -12,3 +12,34 @@
     background-color: rgba(100,100,100,0.5);
     cursor: pointer;
 }
+
+#game-place {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    background-color: lightblue;
+}
+
+.game-place__field {
+    width: 98px;
+    height: 98px;
+    float: left;
+    cursor: pointer;
+    border-right: 2px solid lightcoral;
+}
+
+.game-place__field--first-line {
+    border-bottom: 2px solid lightcoral;
+}
+
+.game-place__field--second-line {
+    height: 100px;
+}
+
+.game-place__field--third-line {
+    border-top: 2px solid lightcoral;
+}
+
+.no-border-right {
+    border-right: unset;
+}
