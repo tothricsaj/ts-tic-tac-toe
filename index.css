@@ -23,6 +23,9 @@
 .game-place__field {
     width: 98px;
     height: 98px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     float: left;
     cursor: pointer;
     border-right: 2px solid lightcoral;
