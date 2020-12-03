@@ -15,15 +15,29 @@ class Welcome {
     private firstPlayerSelector = <HTMLSelectElement>document.querySelector('#fst-player-selector')!
     private secondPlayerSelector = <HTMLSelectElement>document.querySelector('#snd-player-selector')!
 
+    private nameHolder = this.setInputValues()
+    private playerHolder = this.setInputValues()
 
-    private nameHolder = this.inputValues()
-    private playerHolder = this.inputValues()
+    private firstPlayerName = ''
+    private secondPlayerName = ''
 
-    get firstPlayerName() {
-        return ''
+    get firstPlayer(): string {
+        return this.firstPlayerName
     }
 
-    private inputValues() {
+    set firstPlayer(name: string) {
+        this.firstPlayerName = name
+    }
+
+    get secondPlayer(): string {
+        return this.secondPlayerName
+    }
+
+    set secondPlayer(name: string) {
+        this.secondPlayerName = name
+    }
+
+    private setInputValues() {
         let values: valueDictionary<any>
 
         values = {
@@ -78,6 +92,12 @@ class Welcome {
 
         if(playerProperty === 'name') {
             valueObject = this.nameHolder(objectIndex, castedElement.value)
+
+            this.firstPlayer = valueObject.val1
+            this.secondPlayer = valueObject.val2
+
+            console.log(this.firstPlayer, this.secondPlayer)
+
             this.checkNameInputs(valueObject)
         }
         else if(playerProperty === 'selector') {
