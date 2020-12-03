@@ -1,4 +1,4 @@
-import Welcome from './Welcome'
+import PlayersProperty from './PlayersProperty'
 
-const welcome = new Welcome
+const welcome = new PlayersProperty
 welcome.runHandling()

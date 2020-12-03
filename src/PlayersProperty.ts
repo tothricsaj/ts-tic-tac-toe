@@ -6,7 +6,7 @@ interface valueDictionary <TValue>{
     [id: string]: TValue
 }
 
-class Welcome {
+class PlayersProperty {
 
     private welcomeScreen = document.querySelector('.welcome-screen')
     private firstPlayerNameInput = <HTMLInputElement>this.welcomeScreen?.querySelector('#first-player')
@@ -96,7 +96,8 @@ class Welcome {
             this.firstPlayer = valueObject.val1
             this.secondPlayer = valueObject.val2
 
-            console.log(this.firstPlayer, this.secondPlayer)
+            this.playerSelectorWrapper.querySelector('.player__first label')!.textContent = this.firstPlayer
+            this.playerSelectorWrapper.querySelector('.player__second label')!.textContent = this.secondPlayer
 
             this.checkNameInputs(valueObject)
         }
@@ -125,4 +126,4 @@ class Welcome {
     }
 }
 
-export default Welcome
+export default PlayersProperty
