@@ -13,7 +13,7 @@ class GamePlace {
     private isXplayer = true
 
     private currentPlayer() {
-        const cp = this.isXplayer ? 'X' : 'O'
+        const cp = this.isXplayer ? PLAYERS.X : PLAYERS.O
         this.isXplayer = !this.isXplayer
         return cp
     }
@@ -46,6 +46,32 @@ class GamePlace {
         return ''
     }
 
+    private checkLeftToRightDiag(): string {
+        const lineContents = [
+            this.firstLine[0].textContent,
+            this.secondLine[1].textContent,
+            this.thirdLine[2].textContent
+        ]
+
+        if(!!this.checkTheWinner(lineContents as string[]))
+            return this.checkTheWinner(lineContents as string[])
+
+        return ''
+    }
+
+    private checkRightToLeftDiag(): string {
+        const lineContents = [
+            this.firstLine[2].textContent,
+            this.secondLine[1].textContent,
+            this.thirdLine[0].textContent
+        ]
+
+        if(!!this.checkTheWinner(lineContents as string[]))
+            return this.checkTheWinner(lineContents as string[])
+
+        return ''
+    }
+
     private checkTheWinner(lineContents: string[]): string {
         if(lineContents.every(curr => !!curr)) {
             if(lineContents.every(curr => curr === PLAYERS.X)) return PLAYERS.X
@@ -53,6 +79,10 @@ class GamePlace {
         }
 
         return ''
+    }
+
+    private getDimensionFields(lineContents: string[]) {
+
     }
 
     private checkTheDimensions(): void {
@@ -65,6 +95,9 @@ class GamePlace {
             this.checkTheColumns(0),
             this.checkTheColumns(1),
             this.checkTheColumns(2),
+
+            this.checkLeftToRightDiag(),
+            this.checkRightToLeftDiag()
         ]
 
         // console.log(winnerArr)
