@@ -27,10 +27,7 @@ class GamePlace {
             lineField3.textContent
         ]
 
-        if(!!this.checkTheWinner(lineContents as string[]))
-            return this.checkTheWinner(lineContents as string[])
-
-        return ''
+        return this.getDimensionFields(lineContents as string[])
     }
 
     private checkTheColumns(column: number): string {
@@ -40,10 +37,7 @@ class GamePlace {
             this.thirdLine[column].textContent,
         ]
 
-        if(!!this.checkTheWinner(lineContents as string[]))
-            return this.checkTheWinner(lineContents as string[])
-
-        return ''
+        return this.getDimensionFields(lineContents as string[])
     }
 
     private checkLeftToRightDiag(): string {
@@ -53,10 +47,7 @@ class GamePlace {
             this.thirdLine[2].textContent
         ]
 
-        if(!!this.checkTheWinner(lineContents as string[]))
-            return this.checkTheWinner(lineContents as string[])
-
-        return ''
+        return this.getDimensionFields(lineContents as string[])
     }
 
     private checkRightToLeftDiag(): string {
@@ -66,10 +57,8 @@ class GamePlace {
             this.thirdLine[0].textContent
         ]
 
-        if(!!this.checkTheWinner(lineContents as string[]))
-            return this.checkTheWinner(lineContents as string[])
-
-        return ''
+        return this.getDimensionFields(lineContents as string[])
+        
     }
 
     private checkTheWinner(lineContents: string[]): string {
@@ -81,8 +70,11 @@ class GamePlace {
         return ''
     }
 
-    private getDimensionFields(lineContents: string[]) {
+    private getDimensionFields(lineContents: string[]): string {
+        if(!!this.checkTheWinner(lineContents as string[]))
+            return this.checkTheWinner(lineContents as string[])
 
+        return ''
     }
 
     private checkTheDimensions(): void {
@@ -99,8 +91,6 @@ class GamePlace {
             this.checkLeftToRightDiag(),
             this.checkRightToLeftDiag()
         ]
-
-        // console.log(winnerArr)
 
         winnerArr.forEach(win => {
             if(win !== '') {
