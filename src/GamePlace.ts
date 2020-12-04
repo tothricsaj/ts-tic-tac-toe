@@ -21,25 +21,60 @@ class GamePlace {
     private checkTheLine(line: NodeList): string {
         const [lineField1, lineField2, lineField3] = line
 
-        const fstLineContents = [
+        const lineContents = [
             lineField1.textContent,
             lineField2.textContent,
             lineField3.textContent
         ]
 
-        if(fstLineContents.every(curr => !!curr)) {
-            if(fstLineContents.every(curr => curr === PLAYERS.X)) return PLAYERS.X
-            else if(fstLineContents.every(curr => curr === PLAYERS.O)) return PLAYERS.O
+        if(!!this.checkTheWinner(lineContents as string[]))
+            return this.checkTheWinner(lineContents as string[])
+
+        return ''
+    }
+
+    private checkTheColumns(column: number): string {
+        const lineContents = [
+            this.firstLine[column].textContent,
+            this.secondLine[column].textContent,
+            this.thirdLine[column].textContent,
+        ]
+
+        if(!!this.checkTheWinner(lineContents as string[]))
+            return this.checkTheWinner(lineContents as string[])
+
+        return ''
+    }
+
+    private checkTheWinner(lineContents: string[]): string {
+        if(lineContents.every(curr => !!curr)) {
+            if(lineContents.every(curr => curr === PLAYERS.X)) return PLAYERS.X
+            else if(lineContents.every(curr => curr === PLAYERS.O)) return PLAYERS.O
         }
 
         return ''
     }
 
-    private checkTheWinner() {
+    private checkTheDimensions(): void {
+        let winner: string
+        const winnerArr: string[] = [
+            this.checkTheLine(this.firstLine),
+            this.checkTheLine(this.secondLine),
+            this.checkTheLine(this.thirdLine),
 
-        console.log('The winner is ' + this.checkTheLine(this.firstLine))
-        console.log('The winner is ' + this.checkTheLine(this.secondLine))
-        console.log('The winner is ' + this.checkTheLine(this.thirdLine))
+            this.checkTheColumns(0),
+            this.checkTheColumns(1),
+            this.checkTheColumns(2),
+        ]
+
+        // console.log(winnerArr)
+
+        winnerArr.forEach(win => {
+            if(win !== '') {
+                winner = win
+                console.log('The winner is ' + winner)
+            }
+        })
 
     }
 
@@ -51,7 +86,7 @@ class GamePlace {
                     element.innerHTML = self.currentPlayer()
                 }
 
-                self.checkTheWinner()
+                self.checkTheDimensions()
             })
         })
     }
